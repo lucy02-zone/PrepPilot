@@ -1,14 +1,13 @@
-# planner/models.py
 from django.db import models
 from django.contrib.auth.models import User
 
-class StudyPlan(models.Model):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('done', 'Done'),
-        ('revise', 'Revise')
-    ]
+STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('done', 'Done'),
+    ('revise', 'Revise'),
+]
 
+class StudyPlan(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.CharField(max_length=100)
     topic = models.CharField(max_length=200)

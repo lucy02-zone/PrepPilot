@@ -23,17 +23,22 @@ from notes.views import NoteViewSet
 from quizzes.views import QuestionViewSet, QuizAttemptViewSet
 from stress_tools.views import PomodoroSessionViewSet
 from forum.views import ForumQuestionViewSet, ForumReplyViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from auth.views import RegisterView
 
 router = DefaultRouter()
 router.register('study-plans', StudyPlanViewSet)
 router.register('notes', NoteViewSet)
-router.register('questions', QuestionViewSet)
-router.register('quiz-attempts', QuizAttemptViewSet)
 router.register('pomodoro-sessions', PomodoroSessionViewSet)
 router.register('forum-questions', ForumQuestionViewSet)
 router.register('forum-replies', ForumReplyViewSet)
+router.register(r'questions', QuestionViewSet)
+router.register(r'quiz-attempts', QuizAttemptViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/auth/register/', RegisterView.as_view(), name='register'),
+    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/forum/', include('forum.urls')),
     path('api/', include(router.urls)),
 ]

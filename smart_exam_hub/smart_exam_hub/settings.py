@@ -80,10 +80,15 @@ WSGI_APPLICATION = 'smart_exam_hub.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'smart_exam_hub_db',
+        'USER': 'seh_user',
+        'PASSWORD': 'yourpassword',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation

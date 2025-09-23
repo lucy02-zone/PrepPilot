@@ -1,0 +1,64 @@
+.quiz-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.08);
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.quiz-page h2 {
+  font-size: 1.8rem;
+  color: #1e40af; /* same blue as Study Planner */
+  margin-bottom: 2rem;
+}
+
+.quiz-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.quiz-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.12);
+}
+
+.quiz-card h3 {
+  color: #1e3a8a;
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-card p {
+  color: #374151;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.quiz-btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  background-color: #1e40af;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.quiz-btn:hover {
+  background-color: #163296;
+}

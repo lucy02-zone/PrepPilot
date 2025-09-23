@@ -1,0 +1,96 @@
+.notes-card {
+  max-width: 700px;
+  margin: 3rem auto;
+  padding: 2.5rem;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  transition: transform 0.2s;
+}
+
+.notes-card:hover {
+  transform: translateY(-5px);
+}
+
+.notes-title {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #1e40af;
+  margin-bottom: 2rem;
+}
+
+.notes-form {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.notes-form input[type="text"],
+.notes-form input[type="file"] {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border 0.3s;
+}
+
+.notes-form input[type="text"]:focus,
+.notes-form input[type="file"]:focus {
+  border-color: #1e40af;
+  outline: none;
+  box-shadow: 0 0 5px rgba(30, 64, 175, 0.3);
+}
+
+.notes-form button {
+  padding: 0.7rem 1.5rem;
+  background-color: #1e40af;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.notes-form button:hover {
+  background-color: #163296;
+  transform: translateY(-2px);
+}
+
+.notes-form button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.notes-subtitle {
+  margin-top: 1.5rem;
+  color: #1e40af;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.notes-card p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #374151;
+}
+
+.notes-card p.success {
+  color: #16a34a; /* brighter green */
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.notes-card p.success::before {
+  content: "✔";
+}
+
+.notes-card p.error {
+  color: #dc2626; /* red */
+}

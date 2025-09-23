@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "title": "C Programming Basics",
+    "subject": "C",
+    "questions": [
+      {
+        "question": "Which symbol is used to end a statement in C?",
+        "options": [";", ":", ".", ","],
+        "answer": ";"
+      },
+      {
+        "question": "Which header file is required for printf() function?",
+        "options": ["<conio.h>", "<stdio.h>", "<stdlib.h>", "<math.h>"],
+        "answer": "<stdio.h>"
+      },
+      {
+        "question": "What is the correct format specifier for integer in C?",
+        "options": ["%c", "%d", "%f", "%s"],
+        "answer": "%d"
+      },
+      {
+        "question": "Which keyword is used to declare a constant in C?",
+        "options": ["final", "const", "static", "define"],
+        "answer": "const"
+      },
+      {
+        "question": "Which operator is used for 'AND' in C?",
+        "options": ["&&", "&", "and", "||"],
+        "answer": "&&"
+      },
+      {
+        "question": "Which data type is used to store a single character?",
+        "options": ["char", "string", "int", "bool"],
+        "answer": "char"
+      },
+      {
+        "question": "What will be the output of: sizeof(int)? (assuming 32-bit system)",
+        "options": ["2", "4", "8", "16"],
+        "answer": "4"
+      },
+      {
+        "question": "Which loop will execute at least once?",
+        "options": ["for", "while", "do-while", "none"],
+        "answer": "do-while"
+      },
+      {
+        "question": "Which function is used to read a single character in C?",
+        "options": ["scanf()", "getc()", "getchar()", "gets()"],
+        "answer": "getchar()"
+      },
+      {
+        "question": "What is the default return type of a function in C (if not specified)?",
+        "options": ["int", "void", "float", "char"],
+        "answer": "int"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Python Fundamentals",
+    "subject": "Python",
+    "questions": [
+      {
+        "question": "Which keyword is used to define a function in Python?",
+        "options": ["func", "def", "function", "lambda"],
+        "answer": "def"
+      },
+      {
+        "question": "Which data type is mutable in Python?",
+        "options": ["tuple", "string", "list", "int"],
+        "answer": "list"
+      },
+      {
+        "question": "What is the output of: print(type({}))?",
+        "options": ["<class 'list'>", "<class 'dict'>", "<class 'set'>", "<class 'tuple'>"],
+        "answer": "<class 'dict'>"
+      },
+      {
+        "question": "Which operator is used for exponentiation in Python?",
+        "options": ["^", "**", "pow", "exp"],
+        "answer": "**"
+      },
+      {
+        "question": "What is the correct file extension for Python files?",
+        "options": [".py", ".python", ".pyt", ".pt"],
+        "answer": ".py"
+      },
+      {
+        "question": "Which keyword is used to handle exceptions?",
+        "options": ["try", "error", "catch", "except"],
+        "answer": "except"
+      },
+      {
+        "question": "Which function gives the length of a list?",
+        "options": ["count()", "size()", "length()", "len()"],
+        "answer": "len()"
+      },
+      {
+        "question": "Which data type is returned by input() function?",
+        "options": ["int", "float", "string", "bool"],
+        "answer": "string"
+      },
+      {
+        "question": "Which of these is a Python tuple?",
+        "options": ["[1,2,3]", "{1,2,3}", "(1,2,3)", "\"123\""],
+        "answer": "(1,2,3)"
+      },
+      {
+        "question": "Which statement is used to exit from a loop?",
+        "options": ["stop", "break", "exit", "quit"],
+        "answer": "break"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Java Basics",
+    "subject": "Java",
+    "questions": [
+      {
+        "question": "Which method is the entry point of any Java program?",
+        "options": ["main()", "start()", "run()", "init()"],
+        "answer": "main()"
+      },
+      {
+        "question": "Which keyword is used to inherit a class in Java?",
+        "options": ["extends", "inherits", "super", "implements"],
+        "answer": "extends"
+      },
+      {
+        "question": "Which of these is not a Java primitive type?",
+        "options": ["int", "String", "float", "boolean"],
+        "answer": "String"
+      },
+      {
+        "question": "Which symbol is used for single-line comments in Java?",
+        "options": ["//", "#", "/* */", "--"],
+        "answer": "//"
+      },
+      {
+        "question": "Which package is imported by default in every Java program?",
+        "options": ["java.io", "java.lang", "java.util", "java.sql"],
+        "answer": "java.lang"
+      },
+      {
+        "question": "Which access modifier makes a member accessible only within the same class?",
+        "options": ["public", "private", "protected", "default"],
+        "answer": "private"
+      },
+      {
+        "question": "Which loop is best for traversing arrays?",
+        "options": ["for-each", "while", "do-while", "switch"],
+        "answer": "for-each"
+      },
+      {
+        "question": "Which keyword is used to prevent a class from being inherited?",
+        "options": ["final", "static", "const", "sealed"],
+        "answer": "final"
+      },
+      {
+        "question": "Which method is called when an object is created?",
+        "options": ["init()", "start()", "constructor", "main()"],
+        "answer": "constructor"
+      },
+      {
+        "question": "Which of these is used to handle exceptions in Java?",
+        "options": ["try-catch", "error-handler", "exception-block", "catch-finally"],
+        "answer": "try-catch"
+      }
+    ]
+  }
+]

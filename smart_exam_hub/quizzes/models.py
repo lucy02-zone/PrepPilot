@@ -1,22 +1,33 @@
-# quizzes/models.py
 from django.db import models
 from django.contrib.auth.models import User
 
 class Question(models.Model):
-    subject = models.CharField(max_length=100)
-    topic = models.CharField(max_length=200)
-    question_text = models.TextField()
-    option_a = models.CharField(max_length=200)
-    option_b = models.CharField(max_length=200)
-    option_c = models.CharField(max_length=200)
-    option_d = models.CharField(max_length=200)
-    correct_option = models.CharField(max_length=1)  # 'a', 'b', 'c', or 'd'
+    text = models.CharField(max_length=255)
+    option_a = models.CharField(max_length=255)
+    option_b = models.CharField(max_length=255)
+    option_c = models.CharField(max_length=255)
+    option_d = models.CharField(max_length=255)
+    correct_option = models.CharField(
+        max_length=1,
+        choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')]
+    )
 
     def __str__(self):
-        return f"{self.subject} - {self.topic}"
+        return self.text
+
 
 class QuizAttempt(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    questions = models.ManyToManyField(Question)
-    score = models.IntegerField()
-    attempted_at = models.DateTimeField(auto_now_add=True)
+    score = models.IntegerField(default=0)
+    total_questions = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.score}/{self.total_questions}"
+
+
+class UserAnswer(models.Model):
+    attempt = models.ForeignKey(QuizAttempt, related_name="answers", on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    selected_option = models.CharField(max_length=1, choices=[('A', 'A'), ('B', 'B'), ('C', 'C'), ('D', 'D')])
+    is_correct = models.BooleanField(default=False)
