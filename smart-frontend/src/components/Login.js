@@ -8,26 +8,42 @@ function Login() {
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    });
     const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
+        setError('');
+        setIsLoading(true);
 
-        // Demo credentials (you can change these)
-        const demoUser = {
-            username: 'lucy@02',
-            password: 'KL#123',
-        };
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
 
-        if (username === demoUser.username && password === demoUser.password) {
-            // Fake token for frontend-only auth
-            const fakeToken = 'fake-jwt-token';
-            login(fakeToken, { username });
-            navigate('/study-planner');
-        } else {
-            setError('Invalid username or password');
+            const data = await response.json();
+
+            if (response.ok) {
+                login(data.access, {
+                    username: formData.username,
+                    refresh: data.refresh
+                });
+                navigate('/study-planner');
+            } else {
+                setError(data.detail || 'Login failed. Please check your credentials.');
+            }
+        } catch (err) {
+            setError('Unable to connect to the server. Please try again later.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -36,21 +52,31 @@ function Login() {
             <h2>Login</h2>
             {error && <p className="auth-error">{error}</p>}
             <form className="auth-form" onSubmit={handleLogin}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
+                <div className="form-group">
+                    <label htmlFor="username">Username</label>
+                    <input
+                        id="username"
+                        type="text"
+                        value={formData.username}
+                        onChange={(e) => setFormData(prev => ({ ...prev, username: e.target.value }))}
+                        required
+                        disabled={isLoading}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        type="password"
+                        value={formData.password}
+                        onChange={(e) => setFormData(prev => ({ ...prev, password: e.target.value }))}
+                        required
+                        disabled={isLoading}
+                    />
+                </div>
+                <button type="submit" disabled={isLoading} className={isLoading ? 'loading' : ''}>
+                    {isLoading ? 'Logging in...' : 'Login'}
+                </button>
             </form>
             <div className="auth-link">
                 Don't have an account? <a href="/register">Register</a>

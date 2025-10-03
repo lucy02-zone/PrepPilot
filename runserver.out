@@ -1,0 +1,18 @@
+Watching for file changes with StatReloader
+/Users/macbookair/Downloads/PrepPilot/smart_exam_hub/smart_exam_hub/settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+October 03, 2025 - 10:29:26
+Django version 5.2.7, using settings 'smart_exam_hub.settings'
+Starting development server at http://0.0.0.0:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/5.2/howto/deployment/
+Fatal Python error: init_sys_streams: can't initialize sys standard streams
+Python runtime state: core initialized
+OSError: [Errno 9] Bad file descriptor
+
+Current thread 0x00000001fdc34800 (most recent call first):
+  <no Python frame>
