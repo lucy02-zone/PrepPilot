@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.db
+*.log
+*.pot
+*.pyc
+*.pyo
+*.pyd
+*.env
+.env
+venv/
+ENV/
+.env.*
+
+# Django
+*.migrations/
+db.sqlite3
+
+# VSCode
+.vscode/
+
+# macOS
+.DS_Store
+
+# Node
+node_modules/
+
+# React
+/build/
+/dist/
+
+# Logs
+*.log
+
+# Misc
+*.swp
+*.swo
+.idea/
+*.iml
+
+# Coverage
+htmlcov/
+.coverage
+coverage.xml
+
+# Test
+*.pytest_cache/
+
+# Others
+*.bak
+*.tmp
+
+# Ignore local settings
+local_settings.py

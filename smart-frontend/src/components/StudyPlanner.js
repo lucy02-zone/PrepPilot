@@ -1,5 +1,7 @@
 // src/components/StudyPlanner.js
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import FileUpload from './FileUpload';
 import './StudyPlanner.css';
 
 function StudyPlanner() {
@@ -7,48 +9,107 @@ function StudyPlanner() {
     const [subject, setSubject] = useState('');
     const [topic, setTopic] = useState('');
     const [examDate, setExamDate] = useState('');
+    const [notes, setNotes] = useState('');
+    const [priority, setPriority] = useState(1);
     const [error, setError] = useState('');
-
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
-        const savedPlans = JSON.parse(localStorage.getItem('studyPlans')) || [];
-        setPlans(savedPlans);
+        fetchPlans();
     }, []);
 
+    const fetchPlans = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/`, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
 
-    useEffect(() => {
-        localStorage.setItem('studyPlans', JSON.stringify(plans));
-    }, [plans]);
+            if (!response.ok) {
+                throw new Error('Failed to fetch study plans');
+            }
 
-    const addPlan = (e) => {
+            const data = await response.json();
+            setPlans(data);
+        } catch (err) {
+            setError('Failed to load study plans. Please try logging in again.');
+            console.error('Fetch error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const addPlan = async (e) => {
         e.preventDefault();
         if (!subject || !topic || !examDate) {
             setError('Please fill all fields');
             return;
         }
 
-        const newPlan = {
-            id: Date.now(),
-            subject,
-            topic,
-            exam_date: examDate,
-            status: 'pending',
-        };
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    subject,
+                    topic,
+                    exam_date: examDate,
+                    notes,
+                    priority,
+                    status: 'pending'
+                })
+            });
 
-        setPlans([...plans, newPlan]);
-        setSubject('');
-        setTopic('');
-        setExamDate('');
-        setError('');
+            if (!response.ok) {
+                throw new Error('Failed to create study plan');
+            }
+
+            const newPlan = await response.json();
+            setPlans([...plans, newPlan]);
+            setSubject('');
+            setTopic('');
+            setExamDate('');
+            setNotes('');
+            setPriority(1);
+            setError('');
+        } catch (err) {
+            setError('Failed to create study plan. Please try again.');
+            console.error('Submit error:', err);
+        }
     };
 
     // Toggle pending/done
-    const toggleStatus = (id) => {
-        setPlans(plans.map(plan =>
-            plan.id === id
-                ? { ...plan, status: plan.status === 'pending' ? 'done' : 'pending' }
-                : plan
-        ));
+    const toggleStatus = async (id) => {
+        try {
+            const plan = plans.find(p => p.id === id);
+            const newStatus = plan.status === 'pending' ? 'done' : 'pending';
+            
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/${id}/`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                },
+                body: JSON.stringify({
+                    status: newStatus
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update study plan');
+            }
+
+            setPlans(plans.map(plan =>
+                plan.id === id ? { ...plan, status: newStatus } : plan
+            ));
+        } catch (err) {
+            setError('Failed to update study plan status');
+            console.error('Update error:', err);
+        }
     };
 
     // Progress calculation
@@ -98,18 +159,38 @@ function StudyPlanner() {
                     placeholder="Subject"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
+                    required
                 />
                 <input
                     type="text"
                     placeholder="Topic"
                     value={topic}
                     onChange={(e) => setTopic(e.target.value)}
+                    required
                 />
                 <input
                     type="date"
                     value={examDate}
                     onChange={(e) => setExamDate(e.target.value)}
+                    required
                 />
+                <textarea
+                    placeholder="Notes (optional)"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    className="notes-input"
+                />
+                <div className="priority-input">
+                    <label>Priority (1-5):</label>
+                    <input
+                        type="number"
+                        min="1"
+                        max="5"
+                        value={priority}
+                        onChange={(e) => setPriority(parseInt(e.target.value))}
+                        required
+                    />
+                </div>
                 <button type="submit" className="btn">Add Study Plan</button>
             </form>
 
@@ -123,6 +204,30 @@ function StudyPlanner() {
                         <div className="plan-meta">
                             Exam: <span>{plan.exam_date}</span> | Status:{" "}
                             <span className={`plan-status ${plan.status}`}>{plan.status}</span>
+                            {plan.priority && <span> | Priority: {plan.priority}</span>}
+                        </div>
+                        {plan.notes && (
+                            <div className="plan-notes">
+                                <strong>Notes:</strong>
+                                <p>{plan.notes}</p>
+                            </div>
+                        )}
+                        <div className="files-section">
+                            <FileUpload
+                                studyPlanId={plan.id}
+                                onUploadSuccess={() => fetchPlans()}
+                            />
+                            {plan.files && plan.files.length > 0 && (
+                                <ul className="file-list">
+                                    {plan.files.map(file => (
+                                        <li key={file.id}>
+                                            <a href={file.file_url} target="_blank" rel="noopener noreferrer">
+                                                {file.filename}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                         <div className="result-actions">
                             <button className="btn" onClick={() => toggleStatus(plan.id)}>
