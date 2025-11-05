@@ -1,4 +1,4 @@
-import { Note, Tag } from '../types/notes';
+import { Tag } from '../types/notes';
 import { api } from './api.ts';
 
 export const notesApi = {

@@ -16,7 +16,7 @@ const FileUpload = ({ studyPlanId, onUploadSuccess }) => {
             formData.append('file', file);
             
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/${studyPlanId}/attach_file/`, {
+                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/planner/study-plans/${studyPlanId}/attach_file/`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,

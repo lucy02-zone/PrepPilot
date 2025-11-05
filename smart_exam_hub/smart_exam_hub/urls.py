@@ -17,22 +17,26 @@ from auth.views import RegisterView
 from . import views  # Import local views
 
 router = DefaultRouter()
-router.register('study-plans', StudyPlanViewSet)
 router.register('notes', NoteViewSet, basename='note')
 router.register('tags', TagViewSet, basename='tag')
 router.register('pomodoro-sessions', PomodoroSessionViewSet)
-router.register('forum-questions', ForumQuestionViewSet)
-router.register('forum-replies', ForumReplyViewSet)
+router.register('forum/questions', ForumQuestionViewSet)
+router.register('forum/replies', ForumReplyViewSet)
 router.register(r'questions', QuestionViewSet)
 router.register(r'quiz-attempts', QuizAttemptViewSet)
 
 urlpatterns = [
-    path('', include('django.contrib.auth.urls')),  # Include Django auth URLs
-    path('api/', include(router.urls)),
-    path('api/auth/register/', RegisterView.as_view(), name='register'),
-    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/forum/', include('forum.urls')),
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    path('api/planner/', include('planner.urls')),
+    path('api/auth/', include([
+        path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+        path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+        path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+        path('register/', RegisterView.as_view(), name='register'),
+        path('login/', TokenObtainPairView.as_view(), name='login'),
+    ])),
+    path('api/forum/', include('forum.urls')),
     path('', views.api_root, name='api-root'),  # Root API view
 ]
 

@@ -21,7 +21,7 @@ class NoteVoteSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'value', 'created_at']
 
 class NoteSerializer(serializers.ModelSerializer):
-    tags = TagSerializer(many=True, required=False)
+    tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all(), required=False)
     user = UserSerializer(read_only=True)
     vote_count = serializers.SerializerMethodField()
     user_vote = serializers.SerializerMethodField()
@@ -55,27 +55,33 @@ class NoteSerializer(serializers.ModelSerializer):
             user=self.context['request'].user,
             **validated_data
         )
-        
-        # Handle tags
-        for tag_data in tags_data:
-            tag, _ = Tag.objects.get_or_create(**tag_data)
-            note.tags.add(tag)
-            
+
+        # Handle tags as IDs
+        for tag_id in tags_data:
+            try:
+                tag = Tag.objects.get(id=tag_id)
+                note.tags.add(tag)
+            except Tag.DoesNotExist:
+                pass  # Skip invalid tag IDs
+
         return note
 
     def update(self, instance, validated_data):
         tags_data = validated_data.pop('tags', [])
-        
+
         # Update note fields
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
-        
-        # Handle tags
+
+        # Handle tags as IDs
         if tags_data:
             instance.tags.clear()
-            for tag_data in tags_data:
-                tag, _ = Tag.objects.get_or_create(**tag_data)
-                instance.tags.add(tag)
-                
+            for tag_id in tags_data:
+                try:
+                    tag = Tag.objects.get(id=tag_id)
+                    instance.tags.add(tag)
+                except Tag.DoesNotExist:
+                    pass  # Skip invalid tag IDs
+
         return instance

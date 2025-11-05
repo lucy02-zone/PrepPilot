@@ -9,7 +9,15 @@ import {
   Select,
   Autocomplete,
   Chip,
+  Button,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { NoteCard } from './NoteCard.tsx';
 import { notesApi } from '../../api/notes.ts';
 import { Note, Tag } from '../../types/notes';
@@ -22,6 +30,21 @@ export const NotesGrid: React.FC = () => {
   const [topic, setTopic] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [sorting, setSorting] = useState('-created_at');
+
+  // Form states
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    title: '',
+    subject: '',
+    topic: '',
+    content: '',
+    description: '',
+    is_public: true,
+    file: null as File | null,
+    tags: [] as Tag[],
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     loadNotes();
@@ -71,8 +94,139 @@ export const NotesGrid: React.FC = () => {
     console.log('View note:', note);
   };
 
+  const handleFormSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append('title', formData.title);
+      formDataToSend.append('subject', formData.subject);
+      formDataToSend.append('topic', formData.topic);
+      formDataToSend.append('content', formData.content);
+      formDataToSend.append('description', formData.description);
+      formDataToSend.append('is_public', formData.is_public.toString());
+      if (formData.file) {
+        formDataToSend.append('file', formData.file);
+      }
+      formData.tags.forEach(tag => {
+        formDataToSend.append('tags', tag.id.toString());
+      });
+
+      await notesApi.createNote(formDataToSend);
+      setFormData({
+        title: '',
+        subject: '',
+        topic: '',
+        content: '',
+        description: '',
+        is_public: true,
+        file: null,
+        tags: [],
+      });
+      loadNotes();
+      setShowForm(false);
+    } catch (err: any) {
+      setError(err.response?.data?.detail || 'Failed to create note');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Container maxWidth="lg" sx={{ py: 4 }}>
+      <Box sx={{ mb: 4 }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowForm(!showForm)}
+          sx={{ mb: 2 }}
+        >
+          {showForm ? 'Hide Add Note Form' : 'Add New Note'}
+        </Button>
+
+        {showForm && (
+          <Accordion expanded={showForm}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography>Add New Note</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Box component="form" onSubmit={handleFormSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <TextField
+                  label="Title"
+                  value={formData.title}
+                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  required
+                />
+                <TextField
+                  label="Subject"
+                  value={formData.subject}
+                  onChange={(e) => setFormData(prev => ({ ...prev, subject: e.target.value }))}
+                  required
+                />
+                <TextField
+                  label="Topic"
+                  value={formData.topic}
+                  onChange={(e) => setFormData(prev => ({ ...prev, topic: e.target.value }))}
+                  required
+                />
+                <TextField
+                  label="Description"
+                  value={formData.description}
+                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  multiline
+                  rows={2}
+                />
+                <TextField
+                  label="Content"
+                  value={formData.content}
+                  onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                  multiline
+                  rows={4}
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={formData.is_public}
+                      onChange={(e) => setFormData(prev => ({ ...prev, is_public: e.target.checked }))}
+                    />
+                  }
+                  label="Public"
+                />
+                <input
+                  type="file"
+                  onChange={(e) => setFormData(prev => ({ ...prev, file: e.target.files?.[0] || null }))}
+                  accept=".pdf,.doc,.docx,.txt,.jpg,.png"
+                />
+                <Autocomplete
+                  multiple
+                  value={formData.tags}
+                  onChange={(_, newValue) => setFormData(prev => ({ ...prev, tags: newValue }))}
+                  options={tags}
+                  getOptionLabel={(option) => option.name}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Tags" placeholder="Select tags" />
+                  )}
+                  renderTags={(value, getTagProps) =>
+                    value.map((option, index) => (
+                      <Chip
+                        label={option.name}
+                        {...getTagProps({ index })}
+                        key={option.id}
+                      />
+                    ))
+                  }
+                />
+                {error && <Typography color="error">{error}</Typography>}
+                <Button type="submit" variant="contained" disabled={loading}>
+                  {loading ? 'Adding...' : 'Add Note'}
+                </Button>
+              </Box>
+            </AccordionDetails>
+          </Accordion>
+        )}
+      </Box>
+
       <Box 
         sx={{ 
           mb: 4,

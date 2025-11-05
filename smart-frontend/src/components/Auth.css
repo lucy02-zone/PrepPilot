@@ -19,6 +19,111 @@
     font-weight: 600;
 }
 
+/* Form styling */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-form label {
+    color: #4a5568;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: -15px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-color: #4299e1;
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+.auth-form input:disabled {
+    background-color: #f7fafc;
+    cursor: not-allowed;
+}
+
+/* Button styling */
+.auth-form button {
+    background-color: #4299e1;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.auth-form button:hover:not(:disabled) {
+    background-color: #3182ce;
+}
+
+.auth-form button:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+}
+
+.auth-form button.loading {
+    position: relative;
+    color: transparent;
+}
+
+.auth-form button.loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: button-loading 0.8s infinite linear;
+}
+
+/* Error message styling */
+.auth-error {
+    background-color: #fff5f5;
+    border: 1px solid #fed7d7;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 20px;
+    color: #c53030;
+    font-size: 14px;
+}
+
+.auth-error p {
+    margin: 0;
+    padding: 4px 0;
+}
+
+.auth-error p:not(:last-child) {
+    border-bottom: 1px solid #fed7d7;
+}
+
+/* Loading animation */
+@keyframes button-loading {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+
 .auth-form {
     display: flex;
     flex-direction: column;

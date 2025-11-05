@@ -1,18 +1,19 @@
 // src/components/StudyPlanner.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import api from '../api/axios';
 import FileUpload from './FileUpload';
 import './StudyPlanner.css';
 
 function StudyPlanner() {
     const [plans, setPlans] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [subject, setSubject] = useState('');
     const [topic, setTopic] = useState('');
     const [examDate, setExamDate] = useState('');
     const [notes, setNotes] = useState('');
     const [priority, setPriority] = useState(1);
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(true);
+
     
     useEffect(() => {
         fetchPlans();
@@ -20,21 +21,19 @@ function StudyPlanner() {
 
     const fetchPlans = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/`, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch study plans');
-            }
-
-            const data = await response.json();
-            setPlans(data);
+            setLoading(true);
+            setError('');
+            const response = await api.get('/planner/study-plans/');
+            setPlans(response.data);
         } catch (err) {
-            setError('Failed to load study plans. Please try logging in again.');
             console.error('Fetch error:', err);
+            if (err.isConnectionError) {
+                setError('Unable to connect to the server. Please check your internet connection.');
+            } else if (err.response?.status === 401) {
+                setError('Session expired. Please log in again.');
+            } else {
+                setError('Failed to load study plans. Please try again.');
+            }
         } finally {
             setLoading(false);
         }
@@ -43,33 +42,25 @@ function StudyPlanner() {
     const addPlan = async (e) => {
         e.preventDefault();
         if (!subject || !topic || !examDate) {
-            setError('Please fill all fields');
+            setError('Please fill all required fields (Subject, Topic, and Exam Date)');
             return;
         }
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    subject,
-                    topic,
-                    exam_date: examDate,
-                    notes,
-                    priority,
-                    status: 'pending'
-                })
+            setError('');
+            const response = await api.post('/planner/study-plans/', {
+                subject,
+                topic,
+                exam_date: examDate,
+                notes,
+                priority,
+                status: 'pending'
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to create study plan');
-            }
-
-            const newPlan = await response.json();
-            setPlans([...plans, newPlan]);
+            const newPlan = response.data;
+            setPlans(prevPlans => [...prevPlans, newPlan]);
+            
+            // Reset form
             setSubject('');
             setTopic('');
             setExamDate('');
@@ -77,8 +68,16 @@ function StudyPlanner() {
             setPriority(1);
             setError('');
         } catch (err) {
-            setError('Failed to create study plan. Please try again.');
             console.error('Submit error:', err);
+            if (err.isConnectionError) {
+                setError('Unable to connect to the server. Please check your internet connection.');
+            } else if (err.response?.data) {
+                setError(Object.values(err.response.data).join(', '));
+            } else {
+                setError('Failed to create study plan. Please try again.');
+            }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -88,15 +87,8 @@ function StudyPlanner() {
             const plan = plans.find(p => p.id === id);
             const newStatus = plan.status === 'pending' ? 'done' : 'pending';
             
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/study-plans/${id}/`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
-                },
-                body: JSON.stringify({
-                    status: newStatus
-                })
+            const response = await api.patch(`/planner/study-plans/${id}/`, {
+                status: newStatus
             });
 
             if (!response.ok) {

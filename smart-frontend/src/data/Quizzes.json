@@ -5,54 +5,89 @@
     "subject": "C",
     "questions": [
       {
-        "question": "Which symbol is used to end a statement in C?",
-        "options": [";", ":", ".", ","],
-        "answer": ";"
+        "question_type": "MCQ",
+        "text": "Which symbol is used to end a statement in C?",
+        "mcq_options": [
+          {"text": ";", "is_correct": true},
+          {"text": ":", "is_correct": false},
+          {"text": ".", "is_correct": false},
+          {"text": ",", "is_correct": false}
+        ]
       },
       {
-        "question": "Which header file is required for printf() function?",
-        "options": ["<conio.h>", "<stdio.h>", "<stdlib.h>", "<math.h>"],
-        "answer": "<stdio.h>"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ header file is required for printf() function.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ header file is required for printf() function.", "correct_answer": "stdio.h", "blank_position": 1}
+        ]
       },
       {
-        "question": "What is the correct format specifier for integer in C?",
-        "options": ["%c", "%d", "%f", "%s"],
-        "answer": "%d"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of the following C code?",
+        "predict_output_items": [
+          {"code_snippet": "#include <stdio.h>\nint main() {\n    printf(\"%d\", 5/2);\n    return 0;\n}", "correct_output": "2", "language": "c"}
+        ]
       },
       {
-        "question": "Which keyword is used to declare a constant in C?",
-        "options": ["final", "const", "static", "define"],
-        "answer": "const"
+        "question_type": "DRAG_DROP",
+        "text": "Arrange the basic structure of a C program in order.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "#include directives", "correct_position": 1},
+          {"id": 2, "draggable_text": "main() function", "correct_position": 2},
+          {"id": 3, "draggable_text": "Statements", "correct_position": 3},
+          {"id": 4, "draggable_text": "return statement", "correct_position": 4}
+        ]
       },
       {
-        "question": "Which operator is used for 'AND' in C?",
-        "options": ["&&", "&", "and", "||"],
-        "answer": "&&"
+        "question_type": "MCQ",
+        "text": "What is the correct format specifier for integer in C?",
+        "mcq_options": [
+          {"text": "%c", "is_correct": false},
+          {"text": "%d", "is_correct": true},
+          {"text": "%f", "is_correct": false},
+          {"text": "%s", "is_correct": false}
+        ]
       },
       {
-        "question": "Which data type is used to store a single character?",
-        "options": ["char", "string", "int", "bool"],
-        "answer": "char"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ keyword is used to declare a constant in C.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ keyword is used to declare a constant in C.", "correct_answer": "const", "blank_position": 1}
+        ]
       },
       {
-        "question": "What will be the output of: sizeof(int)? (assuming 32-bit system)",
-        "options": ["2", "4", "8", "16"],
-        "answer": "4"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of: sizeof(int) on a 32-bit system?",
+        "predict_output_items": [
+          {"code_snippet": "#include <stdio.h>\nint main() {\n    printf(\"%d\", sizeof(int));\n    return 0;\n}", "correct_output": "4", "language": "c"}
+        ]
       },
       {
-        "question": "Which loop will execute at least once?",
-        "options": ["for", "while", "do-while", "none"],
-        "answer": "do-while"
+        "question_type": "DRAG_DROP",
+        "text": "Order the C data types from smallest to largest (typical sizes).",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "char (1 byte)", "correct_position": 1},
+          {"id": 2, "draggable_text": "short (2 bytes)", "correct_position": 2},
+          {"id": 3, "draggable_text": "int (4 bytes)", "correct_position": 3},
+          {"id": 4, "draggable_text": "long (4-8 bytes)", "correct_position": 4}
+        ]
       },
       {
-        "question": "Which function is used to read a single character in C?",
-        "options": ["scanf()", "getc()", "getchar()", "gets()"],
-        "answer": "getchar()"
+        "question_type": "MCQ",
+        "text": "Which loop will execute at least once?",
+        "mcq_options": [
+          {"text": "for", "is_correct": false},
+          {"text": "while", "is_correct": false},
+          {"text": "do-while", "is_correct": true},
+          {"text": "none", "is_correct": false}
+        ]
       },
       {
-        "question": "What is the default return type of a function in C (if not specified)?",
-        "options": ["int", "void", "float", "char"],
-        "answer": "int"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ function is used to read a single character in C.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ function is used to read a single character in C.", "correct_answer": "getchar", "blank_position": 1}
+        ]
       }
     ]
   },
@@ -62,54 +97,89 @@
     "subject": "Python",
     "questions": [
       {
-        "question": "Which keyword is used to define a function in Python?",
-        "options": ["func", "def", "function", "lambda"],
-        "answer": "def"
+        "question_type": "MCQ",
+        "text": "Which keyword is used to define a function in Python?",
+        "mcq_options": [
+          {"text": "func", "is_correct": false},
+          {"text": "def", "is_correct": true},
+          {"text": "function", "is_correct": false},
+          {"text": "lambda", "is_correct": false}
+        ]
       },
       {
-        "question": "Which data type is mutable in Python?",
-        "options": ["tuple", "string", "list", "int"],
-        "answer": "list"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ data type is mutable in Python.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ data type is mutable in Python.", "correct_answer": "list", "blank_position": 1}
+        ]
       },
       {
-        "question": "What is the output of: print(type({}))?",
-        "options": ["<class 'list'>", "<class 'dict'>", "<class 'set'>", "<class 'tuple'>"],
-        "answer": "<class 'dict'>"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of: print(type({}))?",
+        "predict_output_items": [
+          {"code_snippet": "print(type({}))", "correct_output": "<class 'dict'>", "language": "python"}
+        ]
       },
       {
-        "question": "Which operator is used for exponentiation in Python?",
-        "options": ["^", "**", "pow", "exp"],
-        "answer": "**"
+        "question_type": "DRAG_DROP",
+        "text": "Arrange Python data types by mutability.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "Mutable: list", "correct_position": 1},
+          {"id": 2, "draggable_text": "Mutable: dict", "correct_position": 2},
+          {"id": 3, "draggable_text": "Immutable: tuple", "correct_position": 3},
+          {"id": 4, "draggable_text": "Immutable: string", "correct_position": 4}
+        ]
       },
       {
-        "question": "What is the correct file extension for Python files?",
-        "options": [".py", ".python", ".pyt", ".pt"],
-        "answer": ".py"
+        "question_type": "MCQ",
+        "text": "Which operator is used for exponentiation in Python?",
+        "mcq_options": [
+          {"text": "^", "is_correct": false},
+          {"text": "**", "is_correct": true},
+          {"text": "pow", "is_correct": false},
+          {"text": "exp", "is_correct": false}
+        ]
       },
       {
-        "question": "Which keyword is used to handle exceptions?",
-        "options": ["try", "error", "catch", "except"],
-        "answer": "except"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The correct file extension for Python files is ___ .",
+        "fill_in_blanks_items": [
+          {"blank_text": "The correct file extension for Python files is ___ .", "correct_answer": ".py", "blank_position": 1}
+        ]
       },
       {
-        "question": "Which function gives the length of a list?",
-        "options": ["count()", "size()", "length()", "len()"],
-        "answer": "len()"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of: print(len([1,2,3,4]))?",
+        "predict_output_items": [
+          {"code_snippet": "print(len([1,2,3,4]))", "correct_output": "4", "language": "python"}
+        ]
       },
       {
-        "question": "Which data type is returned by input() function?",
-        "options": ["int", "float", "string", "bool"],
-        "answer": "string"
+        "question_type": "DRAG_DROP",
+        "text": "Order Python's built-in data structures by complexity.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "Simple: int", "correct_position": 1},
+          {"id": 2, "draggable_text": "Simple: float", "correct_position": 2},
+          {"id": 3, "draggable_text": "Container: list", "correct_position": 3},
+          {"id": 4, "draggable_text": "Container: dict", "correct_position": 4}
+        ]
       },
       {
-        "question": "Which of these is a Python tuple?",
-        "options": ["[1,2,3]", "{1,2,3}", "(1,2,3)", "\"123\""],
-        "answer": "(1,2,3)"
+        "question_type": "MCQ",
+        "text": "Which keyword is used to handle exceptions?",
+        "mcq_options": [
+          {"text": "try", "is_correct": false},
+          {"text": "error", "is_correct": false},
+          {"text": "catch", "is_correct": false},
+          {"text": "except", "is_correct": true}
+        ]
       },
       {
-        "question": "Which statement is used to exit from a loop?",
-        "options": ["stop", "break", "exit", "quit"],
-        "answer": "break"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ statement is used to exit from a loop in Python.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ statement is used to exit from a loop in Python.", "correct_answer": "break", "blank_position": 1}
+        ]
       }
     ]
   },
@@ -119,54 +189,163 @@
     "subject": "Java",
     "questions": [
       {
-        "question": "Which method is the entry point of any Java program?",
-        "options": ["main()", "start()", "run()", "init()"],
-        "answer": "main()"
+        "question_type": "MCQ",
+        "text": "Which method is the entry point of any Java program?",
+        "mcq_options": [
+          {"text": "main()", "is_correct": true},
+          {"text": "start()", "is_correct": false},
+          {"text": "run()", "is_correct": false},
+          {"text": "init()", "is_correct": false}
+        ]
       },
       {
-        "question": "Which keyword is used to inherit a class in Java?",
-        "options": ["extends", "inherits", "super", "implements"],
-        "answer": "extends"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ keyword is used to inherit a class in Java.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ keyword is used to inherit a class in Java.", "correct_answer": "extends", "blank_position": 1}
+        ]
       },
       {
-        "question": "Which of these is not a Java primitive type?",
-        "options": ["int", "String", "float", "boolean"],
-        "answer": "String"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of the following Java code?",
+        "predict_output_items": [
+          {"code_snippet": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(5 + 3 * 2);\n    }\n}", "correct_output": "11", "language": "java"}
+        ]
       },
       {
-        "question": "Which symbol is used for single-line comments in Java?",
-        "options": ["//", "#", "/* */", "--"],
-        "answer": "//"
+        "question_type": "DRAG_DROP",
+        "text": "Arrange the basic structure of a Java class in order.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "package declaration", "correct_position": 1},
+          {"id": 2, "draggable_text": "import statements", "correct_position": 2},
+          {"id": 3, "draggable_text": "class declaration", "correct_position": 3},
+          {"id": 4, "draggable_text": "main method", "correct_position": 4}
+        ]
       },
       {
-        "question": "Which package is imported by default in every Java program?",
-        "options": ["java.io", "java.lang", "java.util", "java.sql"],
-        "answer": "java.lang"
+        "question_type": "MCQ",
+        "text": "Which of these is not a Java primitive type?",
+        "mcq_options": [
+          {"text": "int", "is_correct": false},
+          {"text": "String", "is_correct": true},
+          {"text": "float", "is_correct": false},
+          {"text": "boolean", "is_correct": false}
+        ]
       },
       {
-        "question": "Which access modifier makes a member accessible only within the same class?",
-        "options": ["public", "private", "protected", "default"],
-        "answer": "private"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ symbol is used for single-line comments in Java.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ symbol is used for single-line comments in Java.", "correct_answer": "//", "blank_position": 1}
+        ]
       },
       {
-        "question": "Which loop is best for traversing arrays?",
-        "options": ["for-each", "while", "do-while", "switch"],
-        "answer": "for-each"
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of: System.out.println(\"Hello\" + \" \" + \"World\");?",
+        "predict_output_items": [
+          {"code_snippet": "System.out.println(\"Hello\" + \" \" + \"World\");", "correct_output": "Hello World", "language": "java"}
+        ]
       },
       {
-        "question": "Which keyword is used to prevent a class from being inherited?",
-        "options": ["final", "static", "const", "sealed"],
-        "answer": "final"
+        "question_type": "DRAG_DROP",
+        "text": "Order Java access modifiers from most restrictive to least restrictive.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "private", "correct_position": 1},
+          {"id": 2, "draggable_text": "default (package-private)", "correct_position": 2},
+          {"id": 3, "draggable_text": "protected", "correct_position": 3},
+          {"id": 4, "draggable_text": "public", "correct_position": 4}
+        ]
       },
       {
-        "question": "Which method is called when an object is created?",
-        "options": ["init()", "start()", "constructor", "main()"],
-        "answer": "constructor"
+        "question_type": "MCQ",
+        "text": "Which loop is best for traversing arrays?",
+        "mcq_options": [
+          {"text": "for-each", "is_correct": true},
+          {"text": "while", "is_correct": false},
+          {"text": "do-while", "is_correct": false},
+          {"text": "switch", "is_correct": false}
+        ]
       },
       {
-        "question": "Which of these is used to handle exceptions in Java?",
-        "options": ["try-catch", "error-handler", "exception-block", "catch-finally"],
-        "answer": "try-catch"
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ keyword is used to prevent a class from being inherited in Java.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ keyword is used to prevent a class from being inherited in Java.", "correct_answer": "final", "blank_position": 1}
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Mixed Programming Quiz",
+    "subject": "Programming",
+    "questions": [
+      {
+        "question_type": "MCQ",
+        "text": "Which programming language is known for its use in web development?",
+        "mcq_options": [
+          {"text": "Python", "is_correct": false},
+          {"text": "JavaScript", "is_correct": true},
+          {"text": "C++", "is_correct": false},
+          {"text": "Java", "is_correct": false}
+        ]
+      },
+      {
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "The ___ loop in Python is used to iterate over a sequence.",
+        "fill_in_blanks_items": [
+          {"blank_text": "The ___ loop in Python is used to iterate over a sequence.", "correct_answer": "for", "blank_position": 1}
+        ]
+      },
+      {
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of the following Python code?",
+        "predict_output_items": [
+          {"code_snippet": "print(2 + 3 * 4)", "correct_output": "14", "language": "python"}
+        ]
+      },
+      {
+        "question_type": "DRAG_DROP",
+        "text": "Arrange the steps of a basic algorithm in order.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "Input data", "correct_position": 1},
+          {"id": 2, "draggable_text": "Process data", "correct_position": 2},
+          {"id": 3, "draggable_text": "Output result", "correct_position": 3}
+        ]
+      },
+      {
+        "question_type": "MCQ",
+        "text": "Which data structure follows LIFO principle?",
+        "mcq_options": [
+          {"text": "Queue", "is_correct": false},
+          {"text": "Stack", "is_correct": true},
+          {"text": "Array", "is_correct": false},
+          {"text": "Linked List", "is_correct": false}
+        ]
+      },
+      {
+        "question_type": "FILL_IN_THE_BLANKS",
+        "text": "In Java, the keyword ___ is used to create an object.",
+        "fill_in_blanks_items": [
+          {"blank_text": "In Java, the keyword ___ is used to create an object.", "correct_answer": "new", "blank_position": 1}
+        ]
+      },
+      {
+        "question_type": "PREDICT_OUTPUT",
+        "text": "What is the output of the following C code?",
+        "predict_output_items": [
+          {"code_snippet": "#include <stdio.h>\nint main() {\n    printf(\"%d\", 5/2);\n    return 0;\n}", "correct_output": "2", "language": "c"}
+        ]
+      },
+      {
+        "question_type": "DRAG_DROP",
+        "text": "Order the basic components of a computer system.",
+        "drag_drop_items": [
+          {"id": 1, "draggable_text": "CPU", "correct_position": 1},
+          {"id": 2, "draggable_text": "Memory", "correct_position": 2},
+          {"id": 3, "draggable_text": "Storage", "correct_position": 3},
+          {"id": 4, "draggable_text": "Input/Output", "correct_position": 4}
+        ]
       }
     ]
   }

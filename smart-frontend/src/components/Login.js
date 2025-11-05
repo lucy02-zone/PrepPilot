@@ -1,7 +1,8 @@
 // src/components/Login.js
 import React, { useState, useContext } from 'react';
-import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
+import api from '../api/axios';
 import './Auth.css';
 
 function Login() {
@@ -15,37 +16,33 @@ function Login() {
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+
     const handleLogin = async (e) => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
 
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/login/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
+            const response = await api.post('/auth/login/', formData);
+            const data = response.data;
+
+            login(data.access, {
+                username: formData.username,
+                refresh: data.refresh
             });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                login(data.access, {
-                    username: formData.username,
-                    refresh: data.refresh
-                });
-                navigate('/study-planner');
-            } else {
-                setError(data.detail || 'Login failed. Please check your credentials.');
-            }
+            navigate('/');
         } catch (err) {
-            setError('Unable to connect to the server. Please try again later.');
+            if (err.response) {
+                setError(err.response.data.detail || 'Login failed. Please check your credentials.');
+            } else {
+                setError('An error occurred. Please try again.');
+            }
         } finally {
             setIsLoading(false);
         }
     };
+
+
 
     return (
         <div className="auth-container">

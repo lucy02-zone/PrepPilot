@@ -12,4 +12,5 @@ class ForumQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ForumQuestion
-        fields = '__all__'
+        fields = ['id', 'subject', 'topic', 'question_text', 'urgent', 'created_at', 'replies']
+        read_only_fields = ['user']

@@ -5,7 +5,7 @@ import quizzesData from "../data/Quizzes.json";
 import "./TestPage.css";
 
 function TestPage() {
-  const { subject } = useParams();
+  const { subject, type } = useParams();
   const navigate = useNavigate();
   const quiz = quizzesData.find(q => q.subject === subject);
 

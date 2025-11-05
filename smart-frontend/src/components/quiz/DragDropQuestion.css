@@ -1,0 +1,56 @@
+.drag-drop-question {
+    padding: 1rem;
+}
+
+.draggable-container {
+    margin: 2rem 0;
+    padding: 1rem;
+    background-color: #f7fafc;
+    border-radius: 8px;
+    min-height: 200px;
+}
+
+.draggable-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background-color: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: grab;
+    transition: all 0.2s;
+}
+
+.draggable-item:hover {
+    border-color: #4299e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.draggable-item.dragging {
+    background-color: #ebf8ff;
+    border-color: #4299e1;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 2rem auto;
+    padding: 0.75rem 1.5rem;
+    background-color: #4299e1;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-button:hover:not(:disabled) {
+    background-color: #3182ce;
+}
+
+.submit-button:disabled {
+    background-color: #a0aec0;
+    cursor: not-allowed;
+}

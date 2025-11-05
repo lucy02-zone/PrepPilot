@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
+import api from '../api/axios';
 
 const AuthContext = createContext();
 
@@ -12,26 +13,29 @@ export const AuthProvider = ({ children }) => {
         const verifyAuth = async () => {
             const storedToken = localStorage.getItem('token');
             const storedUser = JSON.parse(localStorage.getItem('user'));
-            
+
             if (storedToken && storedUser?.refresh) {
                 try {
-                    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/auth/token/verify/`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ token: storedToken })
-                    });
-    
-                    if (response.ok) {
-                        setIsAuthenticated(true);
-                    } else {
-                        await refreshToken();
-                    }
+                    await api.post('/auth/token/verify/');
+                    setToken(storedToken);
+                    setUser(storedUser);
+                    setIsAuthenticated(true);
                 } catch (error) {
-                    console.error('Auth verification failed:', error);
-                    logout();
+                    if (error.response?.status === 401) {
+                        // Token expired, try to refresh
+                        try {
+                            await refreshToken();
+                        } catch (refreshError) {
+                            console.error('Token refresh failed:', refreshError);
+                            logout();
+                        }
+                    } else {
+                        console.error('Auth verification failed:', error);
+                        logout();
+                    }
                 }
+            } else {
+                setIsAuthenticated(false);
             }
             setLoading(false);
         };
@@ -39,68 +43,27 @@ export const AuthProvider = ({ children }) => {
         verifyAuth();
     }, []);
 
-    const checkAuth = async () => {
-        const storedToken = localStorage.getItem('token');
+    const refreshToken = async () => {
         const storedUser = JSON.parse(localStorage.getItem('user'));
-        
-        if (storedToken && storedUser?.refresh) {
-            // Verify token validity
+
+        if (storedUser?.refresh) {
             try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}/api/token/verify/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ token: storedToken })
+                const response = await api.post('/auth/token/refresh/', {
+                    refresh: storedUser.refresh
                 });
 
-                if (!response.ok) {
-                    // Token is invalid, try to refresh
-                    await refreshToken();
-                } else {
-                    setIsAuthenticated(true);
-                }
-            } catch (error) {
-                console.error('Auth check failed:', error);
-                logout();
-            }
-        } else {
-            setIsAuthenticated(false);
-            setToken(null);
-            setUser(null);
-        }
-        setLoading(false);
-    };
-
-    const refreshToken = async () => {
-        try {
-            const refresh = user?.refresh;
-            if (!refresh) {
-                throw new Error('No refresh token available');
-            }
-
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/token/refresh/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ refresh })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                localStorage.setItem('token', data.access);
-                setToken(data.access);
+                const newToken = response.data.access;
+                localStorage.setItem('token', newToken);
+                setToken(newToken);
                 setIsAuthenticated(true);
                 return true;
-            } else {
-                throw new Error('Token refresh failed');
+            } catch (error) {
+                console.error('Token refresh failed:', error);
+                logout();
+                return false;
             }
-        } catch (error) {
-            console.error('Token refresh failed:', error);
-            logout();
-            return false;
         }
+        return false;
     };
 
     const login = async (accessToken, userData) => {
@@ -120,7 +83,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ 
+        <AuthContext.Provider value={{
             isAuthenticated,
             token,
             user,

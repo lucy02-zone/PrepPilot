@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
@@ -10,7 +9,8 @@ import StudyPlanner from './components/StudyPlanner';
 import { NotesGrid } from './components/notes/NotesGrid.tsx';
 import Login from './components/Login';
 import Register from './components/Register';
-import ForumPage from './components/ForumPage';
+import ForumPage from './components/forum/ForumPage';
+import QuestionDetail from './components/forum/QuestionDetail';
 import QuizPage from './components/QuizPage'; 
 import TestPage from './components/TestPage';   
 import ResultPage from './components/ResultPage';
@@ -163,6 +163,7 @@ function Navbar() {
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, loading } = useContext(AuthContext);
     const location = useLocation();
+    const token = localStorage.getItem('token');
 
     if (loading) {
         return (
@@ -173,7 +174,8 @@ const ProtectedRoute = ({ children }) => {
         );
     }
 
-    if (!isAuthenticated) {
+    // Check both the authentication state and the presence of a token
+    if (!isAuthenticated && !token) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
 
@@ -212,6 +214,11 @@ function App() {
                                 } />
                                 <Route path="/quiz/:subject" element={
                                     <ProtectedRoute>
+                                        <QuizPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/quiz/:subject/:type" element={
+                                    <ProtectedRoute>
                                         <TestPage />
                                     </ProtectedRoute>
                                 } />
@@ -223,6 +230,11 @@ function App() {
                                 <Route path="/forum" element={
                                     <ProtectedRoute>
                                         <ForumPage />
+                                    </ProtectedRoute>
+                                } />
+                                <Route path="/forum/question/:id" element={
+                                    <ProtectedRoute>
+                                        <QuestionDetail />
                                     </ProtectedRoute>
                                 } />
                                 <Route path="/login" element={<Login />} />

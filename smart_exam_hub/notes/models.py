@@ -2,6 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
+from django.utils import timezone
 
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -17,19 +18,19 @@ class Tag(models.Model):
 
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notes')
-    title = models.CharField(max_length=200)
-    subject = models.CharField(max_length=100)
-    topic = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, default='Untitled Note')
+    subject = models.CharField(max_length=100, default='General')
+    topic = models.CharField(max_length=200, default='Miscellaneous')
     content = models.TextField(blank=True)
-    file = models.FileField(upload_to='notes/%Y/%m/%d/')
-    file_type = models.CharField(max_length=50)
+    file = models.FileField(upload_to='notes/%Y/%m/%d/', null=True, blank=True)
+    file_type = models.CharField(max_length=50, default='document')
     file_size = models.IntegerField(default=0)  # in bytes
     description = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag, related_name='notes')
     votes = models.IntegerField(default=0)
     view_count = models.IntegerField(default=0)
     is_public = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:

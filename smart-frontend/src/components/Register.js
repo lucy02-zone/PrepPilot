@@ -10,27 +10,56 @@ function Register() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
+
     const handleRegister = async (e) => {
         e.preventDefault();
+        setError('');
+        setIsLoading(true);
+
         try {
-            const response = await api.post('auth/register/', { username, email, password });
+            const response = await api.post('auth/register/', {
+                username,
+                email,
+                password
+            });
             console.log('Registration successful:', response.data);
-            navigate('/login'); // redirect to login after successful registration
+            navigate('/login', { 
+                state: { message: 'Registration successful! Please log in.' }
+            });
         } catch (err) {
-            if (err.response && err.response.data) {
-                // Show backend error if available
-                setError(JSON.stringify(err.response.data));
-            } else {
-                setError('Registration failed. Try again.');
-            }
             console.error('Registration failed:', err);
+            if (err.isConnectionError) {
+                setError('Unable to connect to the server. Please check your internet connection and try again.');
+            } else if (err.response?.data) {
+                // Handle specific backend validation errors
+                const data = err.response.data;
+                if (typeof data === 'object') {
+                    const errors = Object.entries(data)
+                        .map(([key, value]) => `${key}: ${value.join(', ')}`)
+                        .join('\n');
+                    setError(errors);
+                } else {
+                    setError(data);
+                }
+            } else {
+                setError('Registration failed. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
         <div className="auth-container">
             <h2>Register</h2>
-            {error && <p className="auth-error">{error}</p>}
+            {error && (
+                <div className="auth-error">
+                    {error.split('\n').map((err, index) => (
+                        <p key={index}>{err}</p>
+                    ))}
+                </div>
+            )}
             <form className="auth-form" onSubmit={handleRegister}>
                 <label>Username</label>
                 <input
@@ -38,6 +67,7 @@ function Register() {
                     placeholder="Enter your username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    disabled={isLoading}
                     required
                 />
 
@@ -47,6 +77,7 @@ function Register() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isLoading}
                     required
                 />
 

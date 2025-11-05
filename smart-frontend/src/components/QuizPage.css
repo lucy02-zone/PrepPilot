@@ -57,8 +57,69 @@
   border-radius: 8px;
   font-weight: 600;
   transition: background 0.3s;
+  border: none;
+  cursor: pointer;
+  width: 100%;
 }
 
 .quiz-btn:hover {
   background-color: #163296;
+}
+
+.subject-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.back-btn {
+  background: #fff;
+  color: #1e40af;
+  border: 2px solid #1e40af;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #1e40af;
+  color: white;
+}
+
+.quiz-types-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.quiz-type-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.quiz-type-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.12);
+}
+
+.quiz-type-card h3 {
+  color: #1e3a8a;
+  margin-bottom: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.quiz-type-card p {
+  color: #374151;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
 }
