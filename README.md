@@ -1,6 +1,6 @@
 # PrepPilot - Smart Exam Hub 📚
 
-A modern, glass-morphic study platform built with Django REST Framework and React. PrepPilot helps students organize their notes, take quizzes, plan their studies, and engage with a community forum.
+A modern, glass-morphic study platform built with Django REST Framework and React. PrepPilot helps students organize their notes, take quizzes, plan their studies, and engage with a community forum!!!
 
 ## ✨ Features
 
